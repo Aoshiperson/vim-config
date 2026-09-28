@@ -24,11 +24,11 @@ opt.clipboard = "unnamedplus"
 -- 自动创建 swap/undo 目录（如果不存在）
 local swap_dir = vim.fn.stdpath("state") .. "/swap"
 local undo_dir = vim.fn.stdpath("state") .. "/undo"
-    for _, dir in ipairs({ swap_dir, undo_dir }) do
-        if vim.fn.isdirectory(dir) == 0 then
-            vim.fn.mkdir(dir, "p")
-        end
-    end
+for _, dir in ipairs({ swap_dir, undo_dir }) do
+  if vim.fn.isdirectory(dir) == 0 then
+    vim.fn.mkdir(dir, "p")
+  end
+end
 
 opt.directory = swap_dir .. "//"
 opt.swapfile = true
@@ -57,13 +57,14 @@ require("lazy").setup({
 
   -- 主题
   {
-        "nchhillar2004/gemini.nvim",
-          lazy = false,
-            priority = 1000,
-              config = function()
-                      vim.cmd.colorscheme("gemini")
-                        end,
-                    },
+    "nchhillar2004/gemini.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme("gemini")
+    end,
+  },
+
   -- 语法高亮 / 括号配对高亮
   {
     "nvim-treesitter/nvim-treesitter",
@@ -104,6 +105,26 @@ require("lazy").setup({
 
   -- 状态栏
   { "nvim-lualine/lualine.nvim" },
+
+  -- 浮动命令行
+  {
+    "rachartier/tiny-cmdline.nvim",
+    config = function()
+      require("vim._core.ui2").enable {}
+      require("tiny-cmdline").setup {
+        width = {
+          value = "60%",
+          min = 40,
+          max = 80,
+        },
+        position = {
+          x = "50%",
+          y = "90%",
+        },
+        menu_col_offset = 0,
+      }
+    end,
+  },
 
   -- 调试 (DAP)
   { "mfussenegger/nvim-dap" },
@@ -165,15 +186,15 @@ cmp.setup({
 -- ============================================
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = {  },
+  ensure_installed = {},
 })
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 --vim.lsp.config("clangd", {
---      capabilities = capabilities,
---  })
---  vim.lsp.enable("clangd")
+--  capabilities = capabilities,
+--})
+--vim.lsp.enable("clangd")
 
 -- LSP 相关快捷键（只在有LSP连接的buffer里生效）
 vim.api.nvim_create_autocmd("LspAttach", {
