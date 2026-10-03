@@ -31,7 +31,7 @@ for _, dir in ipairs({ swap_dir, undo_dir }) do
 end
 
 opt.directory = swap_dir .. "//"
-opt.swapfile = true
+opt.swapfile = false
 opt.backup = false
 opt.writebackup = false
 opt.undofile = true
