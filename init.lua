@@ -20,6 +20,15 @@ opt.scrolloff = 8
 opt.signcolumn = "yes"
 opt.updatetime = 250
 opt.clipboard = "unnamedplus"
+opt.clipboard = ""
+
+vim.keymap.set("n", "y", '"+y')
+vim.keymap.set("x", "y", '"+y')
+vim.keymap.set("n", "Y", '"+y$')
+
+vim.keymap.set("n", "p", '"+p')
+vim.keymap.set("n", "P", '"+P')
+vim.keymap.set("x", "p", '"+p')
 
 -- 自动创建 swap/undo 目录（如果不存在）
 local swap_dir = vim.fn.stdpath("state") .. "/swap"
